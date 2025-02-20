@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState("dark");
 
   function increment() {
     setCount(count + 1);
@@ -17,10 +18,17 @@ function App() {
 
     if (currentTheme === "dark") {
       root.setAttribute("color-scheme", "light");
+      setTheme("light");
     } else {
       root.setAttribute("color-scheme", "dark");
+      setTheme("dark");
     }
   }
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("color-scheme", theme);
+  }, [theme]);
 
   function counterValueToDisplay() {
     if (count === 0) {
@@ -78,7 +86,7 @@ function App() {
               onClick={switchTheme}
               className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
             >
-              Switch Theme
+              Switch to {theme === "dark" ? "light" : "dark"} theme
             </button>
           </div>
         </div>
